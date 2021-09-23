@@ -1,0 +1,103 @@
+doctype html
+input#url(type='hidden', value='./assets/library/')
+head
+  meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+  meta(name='description', content='')
+  meta(name='author', content='zeroinfosys.com')
+  title Login | Library System
+  link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/style-responsive.css', rel='stylesheet')
+  link(rel='shortcut icon', href='./assets/library/images/localhost_favicon.png', type='image/*')
+  // HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries
+  //if lt IE 9
+    script(src='js/html5shiv.js')
+    script(src='js/respond.min.js')
+body.login-body(style="background: #3b5998 url(/imagesuse/login-bg.jpg) no-repeat fixed; background-size: cover;")
+.container
+  form.form-signin.form-login
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    .form-signin-heading.text-center
+      center
+        img(src='', class="setitsaa", alt='zeroinfosys.com', style='width:50%;')
+        h1.sign-title Please login
+    .login-wrap
+      input#username.form-control.email(type='text', placeholder='User e-Mail', name='username', autofocus='', value='')
+      input#password.form-control.password(type='password', placeholder='Password', name='password')
+      button.btn.btn-lg.btn-login.btn-block(type='submit')
+        i.fa.fa-arrow-right  Login
+      .registration
+        | Not a member yet?
+        a(href='/Signup', style='cursor: pointer;')
+          | Sign-up
+      .registration3(style="display:flex; justify-content: center")
+        span Forgot Password?
+        a(href='#', class="resets" style='cursor: pointer;')
+          | Reset Password
+      //
+        <div class="table-responsive">
+        <table class="table table-bordered table-striped table-condensed ">
+        <thead>
+        <tr>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="pointer">
+        <td class="username">admin@email.com</td>
+        <td class="password">123</td>
+        <td class="type">Admin</td>
+        </tr>
+        </tbody>
+        </table>
+        </div>
+    // Modal for forgot password
+    #myModal.modal.fade(aria-hidden='true', aria-labelledby='myModalLabel', role='dialog', tabindex='-1')
+      .modal-dialog
+        .modal-content
+          .modal-header(style='background:#a28e84')
+            button.close(type='button', data-dismiss='modal', aria-hidden='true') &times;
+            h4.modal-title Forgot Password ?
+          .modal-body
+            p Enter your e-mail address below to reset your password.
+            input#email.form-control.placeholder-no-fix(type='text', placeholder='Email', autocomplete='off')
+          .modal-footer
+            span.forgot_result.send_result
+            button.btn.btn-primary.send_password(type='button') Submit
+// Placed js at the end of the document so the pages load faster
+script(type="module", src="./js/index.js")
+script(src='/js/jquery-1.10.2.min.js')
+script(src='/js/jquery-ui-1.9.2.custom.min.js')
+script(src='/js/jquery-migrate-1.2.1.min.js')
+script(src='/js/bootstrap.min.js')
+script(src='/js/modernizr.min.js')
+// common scripts for all pages
+script(src='/js/scripts.js')
+script(src='https://unpkg.com/axios/dist/axios.min.js')
+script.
+  $(document).ready(function() {
+  $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+  $('.resets').on('click', function(){
+  $('#myModal').modal('show');
+  })
+  $('.send_password').on('click', async function(){
+  const getTodoItems = async() => {
+  try {
+  const response = await axios.get(`https://library-fyp.herokuapp.com/api/v1/members/ByEmail/${$('#email').val()}`);
+  if(response.data.data[0] === undefined){
+      alert('Account Not Found')
+  }
+  else{
+  window.setTimeout(() => {
+  location.assign(`/ResetPassword/${$('#email').val()}`);
+  }, 1500);
+  }  
+  }catch(errors) {
+  alert('Account Not Found')
+  }
+  }
+  await getTodoItems()
+  })
+  })

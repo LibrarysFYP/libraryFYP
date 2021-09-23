@@ -1,0 +1,220 @@
+extends baseMember 
+
+block content
+
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+    .page-heading
+      h3 Issued book&grave;s records
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a BookIssue
+        li
+          a non_return_books
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+        .col-sm-12
+          section.panel
+            .panel-body
+              -let titles= title==='noretu'?false:true
+              if titles
+                div
+                  a(href='/myNonReturnedBooks')
+                    button.btn.btn-success(type='button') View non return books
+              section#no-more-tables
+                table#booksListTab.table.table-striped.bg-light.table-bordered.dt-responsive.nowrap(style='width:100%')
+                  thead
+                    tr
+                      th #
+                      th Book Name
+                      th.numeric Book holder
+                      th.numeric Issue for
+                      th.numeric Issue date
+                      th.numeric Return date
+                      th.numeric Remains
+                      th.numeric.text-center Status
+                      -let checksAction = title==="RemoveActions"?false:true  
+                      if checksAction
+                        th.numeric.text-right Action
+                  tbody
+                    - let i=1
+                    each list in Member
+                      -let datesNow = Date.now();
+                      -let dates = new Date(Number(list.issuedate));
+                      -const options = {month: 'long', year: 'numeric',  day: 'numeric' };
+                      -dates = dates.toLocaleDateString(undefined, options)                      
+                      -let dates2 = new Date(Number(list.returndate));
+                      -const options2 = {month: 'long', year: 'numeric',  day: 'numeric' };
+                      -dates2 = dates2.toLocaleDateString(undefined, options2)
+                      tr(class=`Yes${list._id}`)
+                        td(data-title='SL')= i++
+                        td(data-title='Book Name')=list.book.name 
+                        td.numeric(data-title='Book holder')
+                          a= list.member.name
+                        -let checks = list.issuefor==='days'?true:false
+                        
+                        if checks
+                          td(data-title='Issue type') issued for days
+                        else
+                          - let issueDate = new Date(Number(list.issuedate));
+                          - let datesss= issueDate.getHours()
+                          - let returnDate = new Date(Number(list.returndate));
+                          - let datess= returnDate.getHours()
+                          - datesss = datesss>12? `${datesss-12} pm`: `${datesss} am`
+                          - datess = datess>12? `${datess-12} pm`: `${datess} am`
+                          td(data-title='Issue type')= `Hours (${datesss} to ${datess})`
+                        td.numeric(data-title='Issue date')=dates 
+                        td.numeric(data-title='Return date')=dates2
+                        td.numeric(data-title='Remains')
+                          
+                            - let checkExpires = datesNow>Number(list.returndate)?true:false
+                            if checkExpires
+                              - let checkremainings= list.remainingdays>=1?true:false
+                              if checkremainings
+                                span.label.label-danger
+                                  strong= `Expired`  
+                              else
+                                span.label.label-danger                                
+                                  strong= `Expired`
+
+
+
+                            else
+
+                              - let checkremainings= list.remainingdays>=0?false:true
+                              if checkremainings
+                                
+                                  - let endDate = new Date(Date.now())
+                                  - let startDate = new Date(Number(list.returndate))
+                                  - let diffs =  startDate.getHours() - endDate.getHours();
+                                  - var diffs2 =(startDate.getTime() - endDate.getTime()) / 1000;
+                                  - diffs2 = Math.abs(Math.round(diffs2/= 60))
+                                  - let checkdiffs = diffs2>60?true:false
+                                  - let minuteschick =  diffs2<=0?true:false
+
+                                  if minuteschick
+                                        span.label.label-danger
+                                          strong= `Expired`
+                                  else
+                                    if checkdiffs
+                                        - let convertHours = Math.floor(diffs2 / 60)
+                                        span.label.label-success
+                                          strong= `${convertHours} hours`
+                                    else
+                                        span.label.label-success
+                                          strong= `${diffs2} Minutes`
+                              else
+                                span.label.label-success
+                                  strong= list.remainingdays
+                                  |  days
+                        td.numeric.text-center(data-title='Status')
+                          - let statusss = list.status===1?true:false
+                          - console.log(statusss)
+                          if statusss
+                            span.text-success Not Returned
+                          else
+                            span.fa.fa-check.text-success Returned
+                        -let checksAction = title==="RemoveActions"?false:true  
+                        if checksAction    
+                          td.numeric.text-right(data-title='Action')
+                            button.btn.btn-success.touchreturn(data-id= list._id, data-book= list.book._id)  Return Book
+                            // Small modal
+                          .modal.fade.bs100(tabindex='-1', role='dialog', aria-labelledby='mySmallModalLabel')
+                            .modal-dialog.modal-sm(role='document')
+                              .modal-content
+                                .row
+                                  .col-sm-12.text-center
+                                    section.panel
+                                      h2.panel-heading
+                                        center.text-danger Click below button if only the book is returned! Not otherwise!!
+                                      .panel-body
+                                        form(action='./assets/library/admin/BookIssue/return_book', method='post')
+                                          input(type='hidden', name='isseu_id', value='100')
+                                          .form-group
+                                            .iconic-input
+                                              i.fa.fa-arrow-right
+                                              input.form-control.btn.btn-success(type='submit', value='Submit Return')
+      #Acceptmember.modal.fadein
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              h5.modal-title Approve Member
+            .modal-body
+              h4 Are you sure you want to Return this Book?
+            .modal-footer
+              button.btn.btn-danger.okReturn(type='button') Yes
+              button.btn.btn-dark(type='button', data-dismiss='modal', style='color: white !important;  background-color: black !important;') Close
+
+      script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    // footer section start
+    // main content end
+    // common scripts for all pages
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      $(document).on('click', '.touchreturn', function() {
+      //- console.log($(this).parent().parent().remove());
+      let idReturn = $(this).attr('data-id');
+      let bookReturn = $(this).attr('data-book');
+      console.log(idReturn, bookReturn);      
+      $('#Acceptmember').modal('show');
+        const getTodoItems = async() => {
+          try {
+               const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/bookissue/ReturneBook/${idReturn}/${bookReturn}`);
+                 
+              $(this).parent().parent().parent().parent().parent().prev().remove()
+
+               if($(this).parent().parent().parent().parent().parent().hasClass('child')){
+                 $(this).parent().parent().parent().parent().parent().remove()
+               }
+
+              } catch (errors) {
+                    console.error(errors);
+          }
+        }
+        $(document).on('click', '.okReturn', function(){
+        $('#Acceptmember').modal('hide');
+        getTodoItems()
+        })
+      });
+
+
+
+
+
+      $("#booksListTab").DataTable();
+      });

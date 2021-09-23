@@ -1,0 +1,228 @@
+extends base 
+
+block content
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css', rel='stylesheet')
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+    .page-heading
+      h3 Issue a book to a member
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a BookIssue
+        li
+          a book_issue_page
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+        form.formIssue
+          .form-signin-heading
+          .col-lg-6
+            section.panel
+              header.panel-heading
+                meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+                |  First portion
+              .panel-body
+                
+                  .form-group
+                    label(style='width:100%;')
+                      | Book 
+                      a(title='Create Book', href='/addBook')
+                        span.fa.fa-plus-circle.pull-right
+                    select#multiple.js-states.form-control(multiple='')
+                      each list in Books  
+                        option(value=`${list._id}`)= list.name
+               
+                  .form-group
+                    label Member ID
+                    .iconic-input
+                      i.fa.fa-user
+                      input#member_id.form-control.memberidz(type='text', name='member', placeholder='Member ID', autocomplete='off')
+                  .form-group
+                    label(style='width:100%')
+                      button.btn.btn-info.pointer.checks_member(type='button')
+                        i.fa.fa-retweet
+                      |  Check Member &nbsp;
+                      div.shows(style="margin-top:20px; display:none; ") 
+                       img.setImage(src="/img/users/user-0.38084311053097-1628270057310.jpeg", width="120px" alt="")
+                       div(style="margin-left: 20px")
+                        span.nameAvail saboor khan
+                        br
+                        span(style="color:#4a9d45; font-weight:bold") User Available
+                      div.nots(style="color: red; display: none") Member Not Found  
+          .col-lg-6
+            section.panel
+              header.panel-heading
+                | Second portion
+              .panel-body
+                .form-group
+                  label Date / Hour
+                  .iconic-input
+                    select.form-control.daytes(name='date_hour', required='')
+                      option(value='', selected='')  Choose date/hour 
+                      option(value='days')  Date wise issue
+                      option(value='hours')  Hour wise issue
+                .date_area(style='display:none')
+                
+                  .form-group
+                    label Date To
+                    .iconic-input
+                      i.fa.fa-calendar
+                      input.form-control.data(type='date', name='date_to', placeholder='Date To', required='')
+                .hour_area(style='display:none')
+               
+                  .form-group
+                    label Hour To
+                    .iconic-input
+                      i.fa.fa-clock-o
+                      input.form-control.hourstos(type='text', name='hour_to', placeholder='Hour To', required='')
+                .form-group
+                  label  &nbsp; 
+                  .iconic-input
+                    i.fa.fa-arrow-right
+                    input.btn.btn-success(type='submit', value='Make this issue')
+      script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+      script(type="module", src="./js/index.js")
+
+      script.
+        $(function() {
+        var url = $("#url").val();
+        $(".check_member").on('click', function() {
+        if ($("#member_id").val().length > 0) {
+        $.ajax({
+        type: "POST",
+        url: url + "admin/BookIssue/check_member",
+        data: {
+        member: $("#member_id").val()
+        },
+        success: function(result) {
+        $(".member_result").html(result);
+        },
+        error: function(request, status, error) {
+        $(".member_result").html(request.responseText);
+        }
+        });
+        } else {
+        $(".member_result").html("<b class='text-danger'>Member ID required</b>");
+        }
+        });
+        //check is book available
+        $('.data').on('change',function() {
+        var dataEnd = $(this).val();
+        console.log((new Date(dataEnd)).getTime());
+        $('.oaksendsainga').attr('data-returns',(new Date(dataEnd)).getTime());
+        })
+        $(".check_book").on('click', function() {
+        if ($('#book').val().length > 0) {
+        $.ajax({
+        type: "POST",
+        url: url + "admin/BookIssue/check_book",
+        data: {
+        book: $('#book').val()
+        },
+        success: function(result) {
+        $(".book_result").html(result);
+        },
+        error: function(request, status, error) {
+        $(".book_result").html(request.responseText);
+        }
+        });
+        } else {
+        $(".book_result").html("<b class='text-danger'>Select book from <b class='text-success'>Book Name</b> field</b>");
+        }
+        });
+        //check is book issued by date or hour
+        $('[name=hour_from]').prop('required', false);
+        $('[name=hour_to]').prop('required', false);
+        $('[name=date_from]').prop('required', false);
+        $('[name=date_to]').prop('required', false);
+        $('[name=date_hour]').on('change', function() {
+        if ($(this).val() == 'hours') {
+        $('.hour_area').show();
+        $('.date_area').hide();
+        $('[name=date_from]').prop('required', false);
+        $('[name=date_to]').prop('required', false);
+        $('[name=hour_from]').prop('required', true);
+        $('[name=hour_to]').prop('required', true);
+        } else {
+        $('.hour_area').hide();
+        $('.date_area').show();
+        $('[name=hour_from]').prop('required', false);
+        $('[name=hour_to]').prop('required', false);
+        $('[name=date_from]').prop('required', true);
+        $('[name=date_to]').prop('required', true);
+        }
+        });
+        })
+    // footer section start
+    // main content end
+    // common scripts for all pages
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $("#multiple").select2({
+      placeholder: "Select a Book",
+      allowClear: true,
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      $('.checks_member').on('click', function(){
+      let email= $('#member_id').val()          
+      const getTodoItems = async() => {
+      let response;
+      try {
+      response = await axios.get(`https://library-fyp.herokuapp.com/api/v1/members/ByEmail/${email}`);
+      console.log(response.data.data[0]);
+      if(response.data.data[0]){
+      response=response.data.data[0]
+      $('.setImage').attr("src",`${response.photo}`)
+      $('.nameAvail').text(response.name)
+      $('.shows').css('display', "flex")
+      $(".nots").css("display", "none");
+      }
+      else{
+      $('.shows').css('display', "none")
+      $('.nots').css('display', 'flex')
+      }
+      }
+      catch (errors) {
+      console.log('Invalid Email');
+      }
+
+      }
+
+      getTodoItems()
+      })
+      });

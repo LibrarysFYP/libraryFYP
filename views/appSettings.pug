@@ -1,0 +1,228 @@
+extends base 
+
+block content
+    style.
+      input[type="file"] {
+      padding: 5px;
+      border: 1px solid silver;
+      border-top: 0px;
+      width: 100%
+      }
+      .custom-file-upload,.custom-file-upload2 {
+      border: 1px solid #ccc;
+      display: inline-block;
+      padding: 14px 12px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 18px;
+      text-align: center;
+      }
+
+    .page-heading
+      h3 Set Library information
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a General
+        li
+          a general
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+        .col-lg-12
+          section.panel
+            header.panel-heading
+              meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+              |  General info
+            .panel-body
+              .row
+                form.AppSettingsForm
+                  .col-lg-6
+                    section.panel
+                      header.panel-heading General information
+                      .panel-body
+                        .form-group
+                          label Library Name
+                          .iconic-input
+                            i.fa.fa-lock
+                            - console.log(AppSettings.name)
+                            input.form-control.libname(type='text', name='sys_name', placeholder='Name of the Library', value=`${AppSettings.name}`)
+                        .form-group
+                          label Library Contact No
+                          .iconic-input
+                            i.fa.fa-phone-square
+                            input.form-control.libphone(type='text', name='sys_contact', placeholder='Library contact No', value=`${AppSettings.contactno}`)
+                  .col-lg-6
+                    section.panel
+                      header.panel-heading Photo Portion 
+                     
+                      .panel-body
+                        .form-group.photos2
+                          .col-lg-7
+                            .row
+                              label
+                                | Choose photo (
+                                small optional
+                                | )
+                                label.custom-file-upload2(for='file-upload2')
+                                  i.fa.fa-cloud-upload
+                                  |  Upload Favicon
+                                input#file-upload2.libfavicon.userPhoto2.addmemberphoto(name='userPhoto', type='file', accept='image/x-png,image/gif,image/jpeg')
+                                button#remove_photo2.btn.btn-danger(type='button', style='width: 94%; display: none;')
+                                  span.ladda-label Remove?
+                          .col-lg-5(style="margin-top:20px")
+                            .row
+                              img.pre_img2(src=`${AppSettings.favicon}`, style='width: 50%; max-width: 100%;')
+                              p.image_view2
+
+                      
+                        .panel-body
+                        .form-group.photos
+                          .col-lg-7
+                            .row
+                              label
+                                | Choose photo (
+                                small optional
+                                | )
+                                label.custom-file-upload(for='file-upload')
+                                  i.fa.fa-cloud-upload
+                                  |  Upload logo
+                                input#file-upload.liblogo.userPhoto.addmemberphoto(name='userPhoto', type='file', accept='image/x-png,image/gif,image/jpeg')
+                                button#remove_photo.btn.btn-danger(type='button', style='width: 94%; display: none;')
+                                  span.ladda-label Remove?
+                          .col-lg-5
+                            .row
+                              img.pre_img.gitssss(src=`${AppSettings.logo}`, style='width: 40%; max-width: 100%;')
+                              p.image_view
+                              p.gitssss23(style="display:none") #{currentuser.email}
+
+
+                    button.btn.btn-success(type='submit') Update Settings
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+
+    script.
+      $(function () {
+      //logo image preview
+      function filePreview2(input){
+      if(input.files && input.files[0]){
+      var reader = new FileReader();
+      reader.onload = function(e){
+      $('.pre_img2').hide();
+      $('.image_view2').after('<img src="'+e.target.result+'" />');
+      $('.photos2 img').css('max-width','100%');
+      $("#remove_photo2").show(200);
+      $(".custom-file-upload2").slideUp(0);
+      }
+      reader.readAsDataURL(input.files[0]);
+      }
+      }
+      $('.userPhoto2').change(function(){
+      filePreview2(this);
+      $('.upload_photo2').show();
+      });
+      //remove logo img
+      $("#remove_photo2").click(function(){
+      $('.photos2 img').hide();
+      $('.pre_img2').show();
+      $('.userPhoto2').val('');
+      $("#remove_photo2").slideUp(300);
+      $('.upload_photo2').slideUp();
+      $('.custom-file-upload2').slideDown(0);
+      });
+      $(".upload_photo2").click(function(){
+      var new_img = $('.new_img2').attr('src');
+      $('.pre_img_main2').attr('src',new_img);
+      var mainPhto = $('.userPhoto2').val();
+      alert(mainPhto);
+      });
+      //check is one of the check-box chosen or not
+      $('.checkbox-inline').click(function(){
+      $('.sub').prop('required',false);
+      });
+
+
+
+
+
+
+      function filePreview(input){
+      if(input.files && input.files[0]){
+      var reader = new FileReader();
+      reader.onload = function(e){
+      $('.pre_img').hide();
+      $('.image_view').after('<img src="'+e.target.result+'" />');
+      $('.photos img').css('max-width','100%');
+      $("#remove_photo").show(200);
+      $(".custom-file-upload").slideUp(0);
+      }
+      reader.readAsDataURL(input.files[0]);
+      }
+      }
+      $('.userPhoto').change(function(){
+      filePreview(this);
+      $('.upload_photo').show();
+      });
+      //remove logo img
+      $("#remove_photo").click(function(){
+      $('.photos img').hide();
+      $('.pre_img').show();
+      $('.userPhoto').val('');
+      $("#remove_photo").slideUp(300);
+      $('.upload_photo').slideUp();
+      $('.custom-file-upload').slideDown(0);
+      });
+      $(".upload_photo").click(function(){
+      var new_img = $('.new_img').attr('src');
+      $('.pre_img_main').attr('src',new_img);
+      var mainPhto = $('.userPhoto').val();
+      alert(mainPhto);
+      });
+      //check is one of the check-box chosen or not
+      $('.checkbox-inline').click(function(){
+      $('.sub').prop('required',false);
+      });
+      })
+
+
+
+    script(type="module", src="./js/index.js")
+  
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script.
+      $(document).ready(function() {
+        
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+
+      });
+

@@ -1,0 +1,278 @@
+extends baseMember 
+
+block content
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+    .page-heading
+      h3 Complete books records
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a Books
+        li
+          a book_list
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+        .col-sm-12
+          section.panel
+            .panel-body
+              section#no-more-tables
+                table#booksListTab.table.table-striped.bg-light.table-bordered.dt-responsive.nowrap(style='width:100%')
+                  thead
+                    tr
+                      th #
+                      th Book Name
+                      th type
+                      th ISBN
+                      th.numeric Category
+                      th.numeric Writer
+                      th.numeric Available
+                      th.numeric Action
+                  tbody
+                   - let i=1;
+                   each book in Books
+
+                        tr.row_90
+                          td(data-title='SL')= i++
+                          td(data-title='Book Name')
+                            a(href='./assets/library/Home/read_book/90')= book.name
+                          td(data-title='Type')
+                          td(data-title='ISBN No')
+                          td.numeric.hey(data-title='Category')= book.Category
+                        
+                          td.numeric(data-title='Writer')= book.writer
+                          td.numeric(data-title='Avail')
+                            span.label.label-success= `(${book.BookAvailability})`
+                          td.numeric(data-title='Action')
+                            -let titles= title === "memberview"?true:false
+                            -let okchukings= memberaa.includes(book._id)=== true?true:false 
+                            if titles
+                              if okchukings
+                                button.btn.btn-success.btn-xs.btnViesss(data-book= book._id, data-member= memberemail, style="margin-right:5px") Request Done
+                              else
+                                button.btn.btn-xs.btn-info.btnViesss(data-book= book._id, data-member= memberemail, style="margin-right:5px") Request Issue
+
+                            else
+                              button.btn.btn-xs.btn-info.btnViess(data-id= book._id, style="margin-right:5px")
+                                span.fa.fa-eye
+                              a.btn.btn-xs.btn-info.editos(href=`/BookUpdate/${book._id}`,  style="margin-right:5px", data-id= book._id)
+                                i.fa.fa-edit
+                              button.btn.btn-xs.btn-info.delete.btnDeltss.okdeletes(data-record='90', data-id= book._id)
+                                i.fa.fa-trash-o
+
+              
+              div
+                ul.pagination.pagination-lg
+                  li
+    // footer section start
+    // main content end
+    #ViewBooks2.modal.fadein
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title Confirm Request
+          .modal-body
+            .row
+              .col-md-12(style="display:flex; justify-content:space-around")
+                button.btn.btn-primary.switch(data-val= "day") Issue for days
+                button.btn.btn-primary.switch(data-val= "hour") Issue for hours
+          .modal-footer
+            button.btn.oksends(type='button', style='color: white !important; background-color: black !important;', data-dismiss='modal') Send Request
+    #ViewBooks.modal.fadein
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title Book Details
+          .modal-body
+            .row
+              .col-sm-3
+                img(src='http://zeroinfosys.com/library/images/bok.png', style='max-width:100%;border-radius: 52%;')
+              .col-sm-9.text-left
+                a(href='http://zeroinfosys.com/library/Home/read_book/90') 
+                span.bookNewName tess 
+                span.bookNewAddition ( addition:  )
+                br
+                b.text-info Book Condition: 
+                | 
+                span.bookconds normal 
+                br
+                b.text-info Book entry date: 
+                |
+                span.bookentries 
+                |
+                br
+                b.text-info Book pages: 
+                |
+                span.bookpagess 
+              .col-sm-12.text-left
+                hr
+                b.text-primary Description of the book: 
+                br
+                p.descriptionss This is amazing Book
+          .modal-footer
+            button.btn(type='button', style='color: white !important; background-color: black !important;', data-dismiss='modal') Close
+    #DeleteBooks.modal.fadein
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            h5.modal-title Delete Record
+          .modal-body
+            h4 Are you sure you want to delete this Book?
+          .modal-footer
+            button.btn.btn-danger.yeahs(type='button') Yes
+            button.btn.btn-dark(type='button', data-dismiss='modal', style='color: white !important;  background-color: black !important;') Close
+    // Placed js at the end of the document so the pages load faster
+    // common scripts for all pages
+    script(src='https://code.jquery.com/jquery-3.5.1.js')
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      //- $(document).on('click', '.editos', async function(){
+
+      //- })
+      let booksss ='';
+      let membersss ='';
+      let duration='';
+      let but='';
+      $(document).on('click', '.btnViesss', async function() {
+          but= $(this);
+          $('#ViewBooks2').modal('show');
+          console.log($(this).attr('data-member'))
+          booksss= $(this).attr('data-book')
+          membersss= $(this).attr('data-member')
+      })
+      $(document).on('click', '.switch', function(){
+        duration= $(this).attr('data-val')
+      })
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      $(document).on('click', '.oksends', async function(){
+            const getTodoItems = async() => {
+                try {
+                    const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/bookissue/Requestissue/${membersss}/${booksss}/${duration}`);
+                    console.log(response);
+                    but.html("Request Done")
+                    but.removeClass("btn-info")
+                    but.addClass("btn-success")
+                } catch (errors) {
+                    console.error(errors);
+                }
+            };
+
+            const abcc= await getTodoItems();
+
+            
+      })
+      $(document).on('click', '.switch', async function(){
+        $('.switch').each(function(i, obj) {
+        //test
+        if($(this).hasClass('Done')){
+        $(this).css('background-color', '#374152')
+        $(this).css('color', 'white')
+        $(this).css('border', '1px solid #374152')
+        $(this).css('outline', 'none')
+        $(this).addClass('Done')
+        }
+        });
+        $(this).css('background-color', '#65cea7')
+        $(this).css('color', 'white')
+        $(this).css('border', '1px solid #65cea7')
+        $(this).css('outline', 'none')
+        $(this).addClass('Done')
+      })
+      $(document).on('click', '.btnViess', async function() {
+                        //-  console.log();
+            const getTodoItems = async() => {
+                try {
+                    const response = await axios.get(`https://library-fyp.herokuapp.com/api/v1/books/${$(this).attr('data-id')}`);
+
+                    const todoItems = response.data.data.data;
+                    //- console.log();
+
+                    $('.bookconds').html(todoItems.BookCondition);
+                    let addition= '';
+                    if(todoItems.BookAddition==1){
+                        addition= 'st'
+                    }
+                    else if(todoItems.BookAddition==2){
+                        addition= 'nd'
+                    }
+                    else if(todoItems.BookAddition==3){
+                        addition= 'rd'
+                    }
+                    $('.bookNewAddition').html(`(${todoItems.BookAddition}${addition} Addition)`)
+                    $('.bookNewName').html(`${todoItems.name}  `)
+
+                    return todoItems;
+                } catch (errors) {
+                    console.error(errors);
+                }
+            };
+
+            const abcc= await getTodoItems();
+            let dates = new Date(Number(abcc.addedAt));
+            const options = {month: 'long', year: 'numeric',  day: 'numeric' };
+            dates = dates.toLocaleDateString(undefined, options)
+         
+            $('.bookentries').html(`${dates}  `)
+            $('.descriptionss').html(abcc.BookDetails)
+            $('.bookpagess').html(abcc.TotalPages)
+
+
+      $('#ViewBooks').modal('show');
+      });
+      let finaldels="";
+      $(document).on('click', '.btnDeltss', async function() {
+      finaldels = $(this)
+      console.log($(this).attr('data-id'));
+      $('.yeahs').attr('data-id',$(this).attr('data-id'))
+      $('#DeleteBooks').modal('show')
+      });
+      $(document).on('click', '.yeahs', async function(){
+      $('#DeleteBooks').modal('hide')
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.delete(`https://library-fyp.herokuapp.com/api/v1/books/${$(this).attr('data-id')}`);
+      console.log(finaldels.parent().parent())
+      finaldels.parent().parent().remove()
+
+      } catch (errors) {
+      console.error(errors);
+      }
+      };
+
+      const abcc= await getTodoItems();
+      })
+      $("#booksListTab").DataTable();
+      })

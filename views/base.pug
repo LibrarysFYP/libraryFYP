@@ -1,0 +1,214 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+  meta(name='keywords', content='admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3')
+  meta(name='description', content='')
+  meta(name='author', content='zeroinfosys.com')
+
+  title Library System
+  style.
+    .d-noness {
+    display: none !important;
+    }
+    .notification-menu .dropdown-menu:after {
+    display: none !important;
+    }
+    .modal-backdrop {
+    background-color: black !important;
+    opacity: 0.4 !important;
+    width: 100% !important;
+    height: 900px !important;
+    z-index: 1050 !important;
+    }
+    .modal {
+    z-index: 1060 !important;
+    }
+    .modal-content {
+    border: none !important
+    }
+    .dataTables_wrapper table.dataTable.dtr-inline.collapsed>tbody>tr>.mainID:before {
+    display: block !important;
+    content: "+" !important;
+    font-size: 20px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: #4f1419 !important;
+    color: white !important;
+    border-radius: 50%;
+    height: 20px !important;
+    width: 2px !important;
+    padding: 0px 10px !important;
+    font-weight: 800;
+    }
+  // common
+  link(rel='stylesheet', href='https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css')
+  link(rel='stylesheet', href='https://cdn.datatables.net/responsive/2.2.8/css/responsive.bootstrap4.min.css')
+  link(href='/css/table-responsive.css', rel='stylesheet')
+  link(href='https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css')
+  link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/style-responsive.css', rel='stylesheet')
+  link(href='/css/font-awesome/css/font-awesome.css', rel='stylesheet')
+
+
+  body.sticky-header
+      -let durationa= 'ss'
+      -let emaila= ''
+      -let membera= ''
+      section
+        // left side start
+        .left-side.sticky-left-side
+          .logo-icon.text-center
+            a(href='./assets/library/Dashboard/')
+              img.setitsaa.pull-right(src='/imagesuse/zeroinfosys.com.png', style='max-height:50px;')
+          // logo and iconic logo end
+          .left-side-inner
+            // visible to small devices only
+            .visible-xs.hidden-sm.hidden-md.hidden-lg
+              .media.logged-user
+                img.media-object(alt='System logo', src='/imagesuse/male_profile.jpg')
+                .media-body
+                  h4
+                    a(href='#') admin@email.com
+              //
+                <div class="media logged-user">
+                /imagesuse/male_profile.jpg			<div class="media-body">
+                <h4><a href="#">admin@email.com</a></h4>
+                </div>
+                </div>
+              h5.left-nav-title Account Information
+              ul.nav.nav-pills.nav-stacked.custom-nav
+                li
+                  a(href='/profile')
+                    i.fa.fa-user
+                    span Profile
+                li
+                  a(href='AppSettings.html')
+                    i.fa.fa-cog
+                    span Settings
+                li
+                  a(href='index.html')
+                    i.fa.fa-sign-out
+                    span Sign Out
+            // sidebar nav start
+            ul.nav.nav-pills.nav-stacked.custom-nav
+              li.active
+                a(href='/')
+                  i.fa.fa-home
+                  span Dashboard
+              li
+                a(href='/TopBooksAndReaders')
+                  i.fa.fa-th-large
+                  span Top Books &amp; Readers
+              li.menu-list
+                a(href='#')
+                  i.fa.fa-book
+                  span Books
+                ul.sub-menu-list
+                  li
+                    a(href='/addBook')
+                      i.fa.fa-plus
+                      |  Add New book
+                  li
+                    a(href='/BookList')
+                      i.fa.fa-list-alt
+                      |  Book List
+                  li
+                    a(role='button', href='/CategoryWiseBooksList', aria-expanded='true', aria-controls='one')
+                      i.fa.fa-list-alt
+                      |  Category wise book
+              li.menu-list
+                a(href='')
+                  i.fa.fa-tags
+                  span Categories
+                ul.sub-menu-list
+                  li
+                    a(href='/addCategory')
+                      i.fa.fa-plus
+                      |  Add New Category
+                  li.active
+                    a(href='/CategoryList')
+                      i.fa.fa-list-alt
+                      |  Category List
+              li.menu-list
+                a(href='')
+                  i.fa.fa-users
+                  span Members
+                ul.sub-menu-list
+                  li
+                    a(href='/addMember')
+                      i.fa.fa-plus
+                      |  Add New Member
+                  li
+                    a(href='/MemberList')
+                      i.fa.fa-users
+                      |  Members list
+                  li
+                    a(href='/NewMember')
+                      i.fa.fa-users.text-success
+                      |  New members
+              li.menu-list
+                a(href='#')
+                  i.fa.fa-retweet
+                  span Book Issue
+                ul.sub-menu-list
+                  li
+                    a(href='/issuebook')
+                      i.fa.fa-hand-o-right
+                      |  Issue A Book
+                  li
+                    a(href='/ReturnBookIssues')
+                      i.fa.fa-calendar-check-o
+                      |  Issued Books
+                  li
+                    a(href='/nonReturnBookIssues')
+                      i.fa.fa-times
+                      | Non-return Books
+
+              li
+                a(href='/GetRequests')
+                  i.fa.fa-book
+                  span Requests For Issues
+              li
+                a(href='/appSettings')
+                  i.fa.fa-cogs
+                  span General Settings
+              li.dologout(style="cursor:pointer")
+                a(style='color:greenyellow')
+                  i.fa.fa-power-off
+                  span Logout
+        .main-content
+          // header section start
+          .header-section
+            // toggle button start
+            a.toggle-btn
+              i.fa.fa-bars
+            // toggle button end
+            // notification menu start
+            input#url(type='hidden', value='http://zeroinfosys.com/library/')
+            .menu-right
+              ul.notification-menu
+                li
+                  a.btn.btn-default.abhu.dropdown-toggle(href='#', data-toggle='dropdown')
+                    img(src='http://zeroinfosys.com/library/images/male_profile.jpg')
+                    span.emailsetup| Loading..
+                    span.caret
+                  ul.dropdown-menu.dropdown-menu-usermenu.pull-right
+                    li
+                      a(href='/profile')
+                        i.fa.fa-user
+                        span Profile
+                    li
+                      a(href='/appSettings')
+                        i.fa.fa-cog
+                        span Settings
+                    li.dologout(style="cursor:pointer")
+                      a()
+                        i.fa.fa-sign-out
+                        span Sign Out
+          block content
+            h1 shiu
+
+

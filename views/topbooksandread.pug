@@ -1,0 +1,120 @@
+extends base
+
+block content
+
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+    .header-section
+      // toggle button start
+      a.toggle-btn
+        i.fa.fa-bars
+      // toggle button end
+      // notification menu start
+      input#url(type='hidden', value='http://zeroinfosys.com/library/')
+      .menu-right
+        ul.notification-menu
+          li
+            a.btn.btn-default.abhu.dropdown-toggle(href='#', data-toggle='dropdown')
+              img(src='http://zeroinfosys.com/library/images/male_profile.jpg')
+              |  admin@email.com 
+              span.caret
+            ul.dropdown-menu.dropdown-menu-usermenu.pull-right
+              li
+                a(href='memberDetails.html')
+                  i.fa.fa-user
+                  span Profile
+              li
+                a(href='AppSettings.html')
+                  i.fa.fa-cog
+                  span Settings
+              li
+                a(href='index.html')
+                  i.fa.fa-sign-out
+                  span Sign Out
+      // notification menu end
+    // header section end
+    .page-heading
+      h3 Welcome to Dashboard
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a TopBooks
+        li
+          a index
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+        .col-sm-6
+          section.panel
+            header.panel-heading
+              b.text-info Top 5 Books
+            .panel-body
+              section#no-more-tables
+                table.table.table-bordered.table-striped.table-condensed.cf.table-hover
+                  thead.cf
+                    tr
+                      th.text-center Photo
+                      th Book Name
+                      th Count
+                  tbody.search_result
+                    each book in topBooks
+                      tr
+                        td.text-center
+                          img(src=`${book.photo}`, style='width: 26px;height: 26px;border-radius: 52%;')
+                        td= book.name
+                        td= `${book.CountReads} reads`
+
+        .col-sm-6
+          section.panel
+            header.panel-heading
+              b.text-info Top 5 Readers
+            .panel-body
+              section#no-more-tables
+                table.table.table-bordered.table-striped.table-condensed.cf.table-hover
+                  thead.cf
+                    tr
+                      th.text-center Photo
+                      th Member Name
+                      th Count
+                  tbody.search_result
+                    each reader in topReaders
+                      tr
+                        td.text-center
+                          img(src=`${reader.photo}`, style='width: 26px;height: 26px;border-radius: 52%;')
+                        td= reader.name
+                        td= `${reader.CountReads} reads`
+      script(src='/js/jquery-1.10.2.min.js')
+      script(src='/js/jquery-ui-1.9.2.custom.min.js')
+      script(src='/js/jquery-migrate-1.2.1.min.js')
+      script(src='/js/modernizr.min.js')
+      script(src='/js/jquery.nicescroll.js')
+      script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+      script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+      script(src='/js/scripts.js')
+      script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+      script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+      script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+      script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+      script(src='https://unpkg.com/axios/dist/axios.min.js')
+      script.
+        $(document).ready(function() {
+        $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+        $('.emailsetup').html($(".gitssss23").html());
+        $('.dologout').on('click', async function(){
+        const getTodoItems = async() => {
+        try {
+        const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+        }catch(errors) {
+        console.log(errors)
+        }
+        }
+        await getTodoItems()
+        window.setTimeout(() => {
+        location.assign(`/`);
+        }, 2500);
+        })
+        $(".opencatss").click(function() {
+        $(".cats").toggleClass("d-noness");
+        });
+        });

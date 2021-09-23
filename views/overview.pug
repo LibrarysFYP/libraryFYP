@@ -1,0 +1,93 @@
+extends base
+
+block content
+
+      img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+      p.gitssss23(style="display:none") #{currentuser.email}
+      .page-heading
+        h3 Welcome to Dashboard
+      .wrapper(style='min-height: 450px')
+        .row.states-info
+          .col-md-3
+            .panel.white-bg
+              .panel-body
+                .row
+                  .col-xs-4
+                    i.fa.fa-book.text-warning
+                  .col-xs-8.text-center.text-success
+                    span.state-title  Issued Books 
+                    h4 #{finaling}
+          .col-md-3
+            .panel.white-bg
+              .panel-body
+                .row
+                  .col-xs-4
+                    i.fa.fa-book.text-success
+                  .col-xs-8.text-center.text-success
+                    span.state-title  Total book number 
+                    h4 #{books}
+          .col-md-3
+            .panel.white-bg
+              .panel-body
+                .row
+                  .col-xs-4
+                    i.fa.fa-users.text-info
+                  .col-xs-8.text-center.text-info
+                    span.state-title  Total members 
+                    h4 #{members}
+          .col-md-3
+            .panel.white-bg
+              .panel-body
+                .row
+                  .col-xs-4
+                    i.fa.fa-undo.text-danger
+                  .col-xs-8.text-center.text-danger
+                    span.state-title
+                      b Non-return books
+                    h4 #{nonreturned}
+
+          .col-md-3
+            .panel.white-bg
+              .panel-body
+                .row
+                  .col-xs-4
+                    i.fa.fa-undo.text-danger
+                  .col-xs-8.text-center.text-danger
+                    span.state-title
+                      b No of Categories
+                    h4 #{categories}
+      script(src='/js/jquery-1.10.2.min.js')
+      script(src='/js/jquery-ui-1.9.2.custom.min.js')
+      script(src='/js/jquery-migrate-1.2.1.min.js')
+      script(src='/js/modernizr.min.js')
+      script(src='/js/jquery.nicescroll.js')
+      script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+      script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+      script(src='/js/scripts.js')
+      script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+      script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+      script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+      script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+      script(src='https://unpkg.com/axios/dist/axios.min.js')
+
+      script.
+        $(document).ready(function() {
+        $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+        $('.emailsetup').html($(".gitssss23").html());
+        $(".opencatss").click(function() {
+        $(".cats").toggleClass("d-noness");
+        });
+        $('.dologout').on('click', async function(){
+        const getTodoItems = async() => {
+        try {
+        const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+        }catch(errors) {
+        console.log(errors)
+        }
+        }
+        await getTodoItems()
+        window.setTimeout(() => {
+        location.assign(`/`);
+        }, 2500);
+        })
+        });

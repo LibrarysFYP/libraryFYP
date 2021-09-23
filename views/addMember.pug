@@ -1,0 +1,195 @@
+extends base 
+
+block content
+
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+    .page-heading
+      h3 New member registration form
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a Members
+        li
+          a new_member
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      section.wrapper
+        // page start
+        form.add_member_form
+          .row
+            .col-lg-6
+              section.panel
+                header.panel-heading
+                  | First portion
+                .panel-body
+                    .form-group
+                      label Member Name
+                      .iconic-input
+                        i.fa.fa-user
+                        input.form-control.addmembername(type='text', name='name', value='', placeholder='Member`s Name')
+                    .form-group 
+                      label Email 
+                      .iconic-input
+                        i.fa.fa-envelope 
+                        input(class="form-control addmemberemail" type="text" placeholder="Enter Email")                        
+
+                    .form-group
+                      label Gender
+                      .iconic-input
+                        i.fa.fa-male
+                        select.form-control.addmembergender(name='sex')
+                          option(selected='', value='')  &nbsp; &nbsp; Choose Gender
+                          option(value='male')  &nbsp; &nbsp; Male
+                          option(value='female')  &nbsp; &nbsp; Female
+                          option(value='other')  &nbsp; &nbsp; Other
+                    .form-group
+                      label Role
+                      .iconic-input
+                        i.fa.fa-male
+                        select.form-control.addmemberrole(name='sex')
+                          option(selected='', value='')  &nbsp; &nbsp; Choose Role
+                          option(value='admin')  &nbsp; &nbsp; Admin
+                          option(value='member')  &nbsp; &nbsp; Member
+                    .form-group
+                      label Content Number
+                      .iconic-input
+                        i.fa.fa-phone-square
+                        input.form-control.addmembernumber(type='number', name='contact', value='', placeholder='Phone/Mobile')
+
+                    .form-group
+                      label Profession
+                      .iconic-input
+                        i.fa.fa-user
+                        input.form-control.addmemberprofession(type='text', value='', name='profession', placeholder='profession')
+                    .form-group 
+                      label Password 
+                      .iconic-input
+                        i.fa.fa-envelope 
+                        input(class="form-control addmemberpassword" type="text" placeholder="Enter Password")                        
+            .col-lg-6
+              section.panel
+                header.panel-heading
+                  | Second portion
+                .panel-body
+                  .form-group
+                    label Living Address
+                    .iconic-input
+                      i.fa.fa-map-marker
+                      input.form-control.addmemberaddress(type='text', name='address', value='', placeholder='Address')
+                  .form-group.photos
+                    .col-lg-7
+                      .row
+                        label
+                          | Choose photo (
+                          small optional
+                          | )
+                          label.custom-file-upload(for='file-upload')
+                            i.fa.fa-cloud-upload
+                            |  Upload Photo
+                          input#file-upload.userPhoto.addmemberphoto(name='userPhoto', type='file', accept='image/x-png,image/gif,image/jpeg')
+                          button#remove_photo.btn.btn-danger(type='button', style='width: 94%; display: none;')
+                            span.ladda-label Remove?
+                    .col-lg-5
+                      .row
+                        img.pre_img(src='', style='width: 40%; max-width: 100%;')
+                        p.image_view
+                  .col-lg-12
+                    .iconic-input
+                      i.fa.fa-arrow-right
+                      input.btn.btn-success(type='submit', value='Add now')
+      style.
+        input[type="file"] {
+        display: none;
+        }
+        .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 14px 12px;
+        cursor: pointer;
+        width: 94%;
+        font-size: 18px;
+        text-align: center;
+        }
+      script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+      script.
+        $(function() {
+        //logo image preview
+        function filePreview(input) {
+        if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+        $('.pre_img').hide();
+        $('.image_view').after('<img src="' + e.target.result + '" />');
+        $('.photos img').css('max-width', '100%');
+        $("#remove_photo").show(200);
+        $(".custom-file-upload").slideUp(0);
+        }
+        reader.readAsDataURL(input.files[0]);
+        }
+        }
+        $('.userPhoto').change(function() {
+        filePreview(this);
+        $('.upload_photo').show();
+        });
+        //remove logo img
+        $("#remove_photo").click(function() {
+        $('.photos img').hide();
+        $('.pre_img').show();
+        $('.userPhoto').val('');
+        $("#remove_photo").slideUp(300);
+        $('.upload_photo').slideUp();
+        $('.custom-file-upload').slideDown(0);
+        });
+        $(".upload_photo").click(function() {
+        var new_img = $('.new_img').attr('src');
+        $('.pre_img_main').attr('src', new_img);
+        var mainPhto = $('.userPhoto').val();
+        alert(mainPhto);
+        });
+        //check is one of the check-box chosen or not
+        $('.checkbox-inline').click(function() {
+        $('.sub').prop('required', false);
+        });
+        })
+    // footer section start
+    // main content end
+    // common scripts for all pages
+    script(type="module", src="./js/index.js")
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      });

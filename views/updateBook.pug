@@ -1,0 +1,178 @@
+extends base 
+block content
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css', rel='stylesheet')
+    style.
+        input[type="file"] {
+        display: none;
+        }
+        .custom-file-upload {
+        border: 1px solid #ccc;display: inline-block;
+        padding: 14px 12px;cursor: pointer;	width: 100%;
+        font-size: 15px;text-align: center; height: 115px;
+        }
+  
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+    .page-heading
+      h3 Add new book to the system
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a Books
+        li
+          a new_book
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+       form.update_book
+        .text-center
+        .col-lg-6
+          section.panel
+            header.panel-heading
+              | First portion
+            .panel-body
+                .form-group
+                  label Book Name
+                  .iconic-input
+                    i.fa.fa-book
+                    input.form-control(type='text', name='name', id='name', value=`${Book.name}`, placeholder='Name of the book')
+                .form-group
+                  label Book ISBN
+                  .iconic-input
+                    i.fa.fa-book
+                    input.form-control(type='text', name='isbnNumber', id="isbnNumber", value=`${Book.isbnNumber}`, placeholder='Name of the book')
+                .form-group
+                  label Available book number
+                  .iconic-input
+                    i.fa.fa-book
+                    input.form-control(type='number', name='BookAvailability', id="BookAvailability", value=`${Book.BookAvailability}`, placeholder='book amount')
+                .form-group
+                  label Writer Name
+                  .iconic-input
+                    i.fa.fa-user
+                    input.form-control(type='text', value=`${Book.writer}`, name='writer', id="writer" placeholder='Name of writer')
+                .form-group
+                  label Book Addition
+                  .iconic-input
+                    i.fa.fa-plus
+                    input.form-control(type='text', value=`${Book.BookAddition}`, name='BookAddition', id="BookAddition" placeholder='Addition', data-id= Book._id)
+                .form-group
+                  label(style='width:100%;')
+                    | Category 
+                    a(title='Create Category', href='AddCategory.html')
+                      span.fa.fa-plus-circle.pull-right
+                  select#multiple.js-states.form-control(multiple='')
+                    each list in Categories
+                      - let abc = Book.Category.includes(list.name) == true? true:false
+                      if abc
+                        option(value=`${list._id}`, selected)= list.name
+                      else 
+                        option(value=`${list._id}`)= list.name
+                      
+        .col-lg-6
+          section.panel
+            header.panel-heading
+              | Second portion
+            .panel-body
+              .form-group.photos(style='width: 50%;')
+                label
+                  | Choose photo 
+                  small ( Optional )
+                label.custom-file-upload(for='photo')
+                  i.fa.fa-cloud-upload
+                  |  Upload Photo
+                  input#photo.book_photo(name='photo', type='file', accept='image/*')
+              .form-group
+                label Status
+                - let checkstutus=  Book.Status ===  'available'? true:false
+                select.form-control.m-bot15.tooltips(name='Status', id="Status" data-trigger='hover', data-toggle='tooltip', title='', data-original-title='If Unavailable then the book will not be issued')
+                  if checkstutus
+                    option(value='available', Selected) Available
+                    option(value='unavailable') Unavailable
+                  else
+                    option(value='unavailable', Selected) Unavailable
+                    option(value='available') Available
+              .form-group.bookUpload(style='display:none')
+                label Upload the book
+                input.form-control(type='file', accept='application/pdf', name='book_pdf', value='Upload the book')
+              .form-group
+              - let checknormal=false
+              - let checkgood=false
+              - let checkbad=false
+                label Book Condition
+              - if(Book.BookCondition==='normal'){checknormal = true}else if(Book.BookCondition==='bad'){checkbad = true} else{checkgood = true}
+                //- Book.Status ===  'available'? true:false                
+              select.form-control.m-bot15.tooltips(name='BookCondition', id="BookCondition" data-trigger='hover', data-toggle='tooltip', title='', data-original-title='If Unavailable then the book will not be issued')
+                if checknormal 
+                  option(value='normal' Selected) Normal
+                  option(value='bad') Bad
+                  option(value='good') Good                
+                if checkbad
+                  option(value='normal') Normal
+                  option(value='bad' Selected) Bad
+                  option(value='good') Good                
+                if checkgood
+                  option(value='normal') Normal
+                  option(value='bad') Bad
+                  option(value='good' Selected) Good
+ 
+
+              
+              .form-group
+                .form-group
+                  textarea.form-control(rows='6' name='BookDetails', id="BookDetails" placeholder='Book details ( if any )')= Book.BookDetails
+                br
+                .form-group
+                   button.btn.btn-primary
+                     i.fa.fa-cloud
+                     |  Save Now
+
+    // footer section start
+    // main content end
+    // common scripts for all pages
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+
+    script(type="module", src="/js/index.js")
+
+    script.
+      $(document).ready(function(){
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function(){
+      $('.cats').toggleClass('d-noness');
+      });
+      $("#multiple").select2({
+      placeholder: "Select a category",
+      allowClear: true,
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      });

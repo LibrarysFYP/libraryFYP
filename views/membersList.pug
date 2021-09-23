@@ -1,0 +1,236 @@
+extends base
+
+block content
+    style.
+      .d-noness {
+      display: none !important;
+      }
+      .notification-menu .dropdown-menu:after {
+      display: none !important;
+      }
+      .modal-backdrop {
+      background-color: black !important;
+      opacity: 0.4 !important;
+      width: 100% !important;
+      height: 900px !important;
+      z-index: 1050 !important;
+      }
+      .modal {
+      z-index: 1060 !important;
+      }
+      .modal-content {
+      border: none !important
+      }
+      .dataTables_wrapper table.dataTable.dtr-inline.collapsed>tbody>tr>.mainID:before {
+      display: block !important;
+      content: "+" !important;
+      font-size: 20px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      background-color: #4f1419 !important;
+      color: white !important;
+      border-radius: 50%;
+      height: 20px !important;
+      width: 2px !important;
+      padding: 0px 10px !important;
+      font-weight: 800;
+      }
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+
+    .page-heading
+      h3 Records about members
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a Members
+        li
+          a member_list
+    .wrapper(style='min-height: 450px;')
+      .row
+        .col-md-12
+          .panel
+            header.panel-heading
+              a.fa.fa-refresh(href='')
+              |  &nbsp; Our Members &nbsp; | &nbsp; 
+              b.text-danger #{results}
+              |  records found! &nbsp; &nbsp; 
+              input#jquery-search-sample.earchbar(type='text', placeholder='Search member')
+              a.pull-right(href='/addMember')
+                span.fa.fa-plus-circle
+                |  Add New
+            .row.search_result
+              br
+              each list in memberlist
+                .col-md-4.row_135.jsearch-row
+                  .panel
+                    .panel-body
+                      .dir-info
+                        .row.edit_panel(data-key='0')
+                          .col-xs-2
+                            .avatar.downloadit
+                              img(src=`${list.photo}`, alt='')
+                          .col-xs-8
+                            h5.jsearch-field= list.name
+                            span
+                              a.small(href='#')= list.phonenumber
+                          .col-xs-2
+                            a.dir-like.tooltips(href='./assets/library/admin/MyBooks/my_book_list/135', data-trigger='hover', data-toggle='tooltip', title='', placeholder='Hover me', data-original-title='Issued book number')
+                              - let abc = typeof list.books
+                              - abc = abc=="number"?true:false
+                              - console.log(abc)
+                              if abc
+                                 a.small.text-danger(href=`/MemberBooks/${list._id}`)= ` 0${list.books} `
+                              else
+                                 a.small.text-danger(href=`/MemberBooks/${list._id}`)= ` 0 `
+                              a(href=`/MemberBooks/${list._id}`)
+                                i.fa.fa-book.text-success
+                          .row.edit_delete.text-center.pull-left.row_0(data-key='0', style='width:100%; cursor: pointer;')
+                            if abc
+                              a(href=`/profiling/${list._id}`, title='Click to accept the member request')
+                                span.fa.fa-check  Update 
+                            
+                            else
+                              span.fa.fa-check.acceptthat(style="color:#65cea7 !important", data-id=`${list.id}`)  Accept 
+                            span.btnDeltss(data-mem_id='135')
+                              | | 
+                              span.fa.fa-trash.delete.text-danger.delsmemb(data-id= list._id )  Delete
+                            |  |
+                            a(href=`/profiling/read/${list._id}`)
+                              span.fa.fa-eye  Details
+
+            .text-center.row
+              ul.pagination.pagination-lg
+                li
+      
+      #Acceptmember.modal.fadein
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              h5.modal-title Approve Member
+            .modal-body
+              h4 Are you sure you want to Approve this member?
+            .modal-footer
+              button.btn.btn-danger.okssss(type='button') Yes
+              button.btn.btn-dark(type='button', data-dismiss='modal', style='color: white !important;  background-color: black !important;') Close
+      #DeleteBooks.modal.fadein
+        .modal-dialog(role='document')
+          .modal-content
+            .modal-header
+              h5.modal-title Delete Member
+            .modal-body
+              h4 Are you sure you want to delete this member?
+            .modal-footer
+              button.btn.btn-danger.delyeahs(type='button') Yes
+              button.btn.btn-dark(type='button', data-dismiss='modal', style='color: white !important;  background-color: black !important;') Close
+    // footer section start
+    // main content end
+    // common scripts for all pages
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+    script(src='https://code.jquery.com/jquery-1.12.3.min.js')
+    script(src='/js/jquersearch.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      let choose= '';
+      $(document).on('click', '.acceptthat', function() {
+      choose= $(this)
+      $('#Acceptmember').modal('show')
+      $('.okssss').attr('data-id', $(this).attr('data-id'))
+      });
+      let delsss= ''
+      $(document).on('click', '.delsmemb', function(){
+      console.log($(this).attr('data-id'))
+      delsss= $(this)
+      })
+      $('.okssss').on('click', async function(){
+      let data = $(this).attr('data-id')
+      const response = await axios.get(`https://library-fyp.herokuapp.com/api/v1/members/approvemember/${data}`);
+      console.log(response);
+      $('#Acceptmember').modal('hide')
+      choose.parent().parent().parent().parent().parent().parent().remove();
+      })
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $(document).on('click', '.delyeahs', async function(){
+      const response = await axios.delete(`https://library-fyp.herokuapp.com/api/v1/members/${$(delsss).attr('data-id')}`);
+      $('#DeleteBooks').modal('hide')
+      $(delsss).parent().parent().parent().parent().parent().parent().parent().remove()
+      })
+      $(document).on('click', '.btnDeltss', function() {
+      $('#DeleteBooks').modal('show')
+      });
+      $("#jquery-search-sample").jsearch({
+      minLength: 1,
+      });
+      });
+    script.
+    script(type='text/javascript').
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-36251023-1"]);
+      _gaq.push(["_setDomainName", "jqueryscript.net"]);
+      _gaq.push(["_trackPageview"]);
+      (function() {
+      var ga = document.createElement("script");
+      ga.type = "text/javascript";
+      ga.async = true;
+      ga.src =
+      ("https:" == document.location.protocol ?
+      "https://ssl" :
+      "http://www") + ".google-analytics.com/ga.js";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(ga, s);
+      })();
+    script.
+        $('.dologout').on('click', async function(){
+        const getTodoItems = async() => {
+        try {
+        const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+        }catch(errors) {
+        console.log(errors)
+        }
+        }
+        await getTodoItems()
+        window.setTimeout(() => {
+        location.assign(`/`);
+        }, 2500);
+        })
+        //- $(document).on('click', '.downloadit', function(){          
+        //-   axios({
+        //-   url: `https://library-fyp.herokuapp.com/img/pexels-rodnae-productions-8711391.mp4`,
+        //-   method: "GET",
+        //-   responseType: "blob",  
+        //-   }).then((response) => {
+        //-   console.log(response);
+        //-   const url = window.URL.createObjectURL(
+        //-   new Blob([response.data], {
+        //-   type: "video/mp4",
+        //-   })
+        //-   );
+        //-   const link = document.createElement("a");
+        //-   link.href = url;
+        //-   link.setAttribute("download", "image.mp4");
+        //-   document.body.appendChild(link);
+        //-   link.click();
+        //-   document.body.removeChild(link);
+        //-   });          
+        //- });
+        

@@ -1,0 +1,224 @@
+extends base
+
+block content
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+
+    .page-heading
+      h3 Profile information
+      ul.breadcrumb
+        li
+          a admin
+        li
+          a Members
+        li
+          a profile
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+      .row
+        .col-md-4
+          .row
+            .col-md-12
+              .panel
+                .panel-body
+                  .profile-pic.text-center
+                    img(alt='Logger', src=`${Profile.user.photo}`)
+                    br
+                    p.fa.fa-camera.pointer.text-primary.abst  Choose photo
+            // user analytical info
+            .col-md-12
+              .panel
+                .panel-body
+                  ul.p-info
+                    li
+                      .title Gender
+                      .desk=Profile.user.gender
+                    li
+                      .title Profession
+                      .desk= Profile.user.profession
+                    li
+                      .title Position
+                      .desk= Profile.user.role
+                    li
+                      -let dates = new Date(Number(Profile.user.joinedAt));
+                      -const options = {month: 'long', year: 'numeric',  day: 'numeric' };
+                      -dates = dates.toLocaleDateString(undefined, options)
+                      .title Joined
+                      .desk= dates
+                    li
+                      .title Book issued
+                      .desk= Profile.totalissues
+                    li
+                      .title Book Return
+                      .desk= Profile.noofreturns
+                        - let abco= Profile.noofreturns/Profile.totalissues*100
+                        - let checks = Profile.noofreturns === 0 ?true:false
+                        if checks  
+                          span.text-danger(style="margin-left:10px")= `Return 0%!`
+                        else  
+                          span.text-danger(style="margin-left:10px")= `Return ${abco.toFixed(2)}%!`
+            -let titles = title === "memberprof"?false:true
+            if titles
+              .col-md-12
+                form.changePassword
+                  .panel
+                    p.text-center.text-danger Update Your Password 
+                    .panel-body
+                      .form-group
+                        label Running password
+                        .iconic-input
+                          i.fa.fa-lock.text-success
+                          input#running_pass.form-control.passwordCurrent(type='password', placeholder='Old password')
+                      .form-group
+                        label Set new password
+                        .iconic-input
+                          i.fa.fa-lock.text-success
+                          input#new_pass.form-control.password(type='password', placeholder='New password')
+                      .form-group
+                        label Confirm new password
+                        .iconic-input
+                          i.fa.fa-lock.text-success
+                          input#new_pass2.form-control.passwordConfirm(type='password', placeholder='COnfirm new password')
+                      .form-group
+                        .iconic-input.text-center
+                          b.result_pass.text-danger
+                        .iconic-input.text-center
+                          input#update_pass.btn.btn-info(type='submit', value='Update Password')
+        .col-md-8  
+          form.updateUserMember
+            .row
+              .col-md-12
+                .panel
+                  .panel-body
+                    .profile-desk
+                      h1= Profile.user.name
+                      span.designation= Profile.user.email
+                  // user update information
+                  .panel-body.bg-info
+                    .col-lg-12
+                      p
+                        | Update personal information 
+                        span.fa.fa-angle-double-down
+                      hr
+                      .form-group
+                        label Name
+                        .iconic-input
+                          i.fa.fa-user
+                          input#name.form-control.names(type='text', placeholder='Name', value=`${Profile.user.name}`)
+                      .form-group
+                        label E-mail
+                        .iconic-input
+                          i.fa.fa-envelope
+                          input.form-control.emails(type='text', data-id=`${Profile.user._id}`, placeholder='Email', value=`${Profile.user.email}`, disabled='')
+                      -let titless = title === 'memberprof'?false:true
+                      if titless
+                        .form-group
+                          label Role in system
+                          .iconic-input
+                            - let checssm= Profile.user.role === 'member'?true:false
+                            select#role.form-control.roles
+                              if checssm
+                                option(value='member' Selected) Member
+                                option(value='admin') Admin
+                              else
+                                option(value='admin' Selected) Admin
+                                option(value='member') Member    
+                      .form-group
+                        label Phone No
+                        .iconic-input
+                          i.fa.fa-phone-square
+                          input#contact.form-control.phones(type='text', placeholder='contact', value=`${Profile.user.phonenumber}`)
+                      .form-group
+                        label Living address
+                        .iconic-input
+                          i.fa.fa-map-marker
+                          input#address.form-control.addresses(type='text', placeholder='Address', value=`${Profile.user.address}`)
+                      - let checkread = read ==='read'?false:true
+                      if checkread
+                        .form-group
+                          button.btn.btn-info.update_user.btos(type='submit') Upload User info
+                          span.result_user
+      style.
+        input[type="file"] {
+        display: none;
+        }
+        .custom-file-upload {
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 14px 12px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        text-align: center;
+        }
+      script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+      // this portion of jquery will load if is 'update' variable set at url
+    // footer section start
+    // main content end
+    #DeleteBooks.modal.fadein
+      .modal-dialog.modal-sm
+        // Content
+        .modal-content
+          // Header
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') x
+            h5#myModalLabel.modal-title Choose photo
+          // Body
+          .modal-body.photos
+            form(enctype='multipart/form-data', action='./assets/library/admin/Members/update_user_photo/88', method='post', accept-charset='utf-8')
+              center
+                label.custom-file-upload(for='file-upload')
+                  i.fa.fa-cloud-upload
+                  |  Upload Photo
+                input#file-upload.userPhoto(name='memberPhoto', type='file', accept='image/x-png,image/gif,image/jpeg')
+                p.image_view
+          // Footer
+          .modal-footer.flex-column.text-center
+            button#remove_photo.btn.btn-danger.pull-right.form-control(type='button', style='display:none')
+              span.ladda-label Remove?
+            br
+            button.btn.btn-info.upload_photo.form-control(type='submit', style='display:none') Upload Photo
+        // /.Content
+    // common scripts for all pages
+
+    script(type="module", src="/js/index.js")
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      $(document).on('click', '.abst', function() {
+      $('#DeleteBooks').modal('show')
+      });
+      });

@@ -1,0 +1,192 @@
+extends baseMember 
+
+block content
+    style.
+      .addss{
+      display: block; margin-top: 10px;
+      }
+      @media only screen and (min-width:148px) and (max-width:444px){
+      .chngeds{
+      font-size: 10px !important;
+      }
+      }
+      @media only screen and (min-width:148px) and (max-width:304px){
+      .chngeds2{
+      font-size: 8px !important;
+      }
+      }
+      .d-noness{
+      display: none !important;
+      }
+      .wrapword {
+      white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+      white-space: -webkit-pre-wrap;          /* Chrome & Safari */ 
+      white-space: -pre-wrap;                 /* Opera 4-6 */
+      white-space: -o-pre-wrap;               /* Opera 7 */
+      white-space: pre-wrap;                  /* CSS3 */
+      word-wrap: break-word;                  /* Internet Explorer 5.5+ */
+      word-break: break-all;
+      white-space: normal;
+      }
+      .notification-menu .dropdown-menu:after{
+      display: none !important;
+      }
+      .modal-backdrop{
+      background-color: black !important;
+      opacity: 0.4 !important;
+      width: 100% !important;
+      height: 900px !important;
+      z-index: 1050 !important;
+      }
+      .modal{
+      z-index: 1060 !important;
+      }
+      .modal-content{
+      border: none !important
+      }
+      .dataTables_wrapper table.dataTable.dtr-inline.collapsed>tbody>tr>.mainID:before{
+      display: block !important;
+      content: "+" !important;
+      font-size: 20px !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      background-color: #4f1419 !important;
+      color: white !important;
+      border-radius: 50%;
+      height: 20px !important;
+      width: 2px !important;
+      padding: 0px 10px !important;
+      font-weight: 800;
+      }
+
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    p.gitssss23(style="display:none") #{currentuser.email}
+
+    .page-heading
+      h3 Welcome to Dashboard
+      ul.breadcrumb
+        li
+          a Member
+        li
+          a Dashboard
+        li
+          a index
+    // body wrapper start
+    .wrapper(style='min-height: 450px;')
+        .col-md-12
+          .col-md-12
+            .panel.white-bg
+              .panel-body
+                .row
+                  .col-xs-6.oness
+                    img(style='max-width:100%', src=`${Member.photo}`)
+                  .col-xs-6.oness
+                    strong.text-center.chngeds
+                      span.fa.fa-user.text-info
+                      |  #{Member.name}
+                      br
+                      span.fa.fa-phone-square.text-info
+                      |  #{Member.phonenumber}
+                      br
+                      div(style="display:flex")
+                      span.fa.fa-envelope.text-info
+                      span.wrapword(style="margin-left:10px")  #{Member.email}
+                      br
+                      span.fa.fa-map-marker.text-info
+                      |  #{Member.address}
+                      br
+        .col-md-12
+          .panel.white-bg
+            .panel-body
+              .row
+                .col-xs-12
+                  i.fa.fa-calendar.text-success
+                  span.state-title.text-warning
+                    b.chngeds.chngeds2  Joined with us
+                      -let dates= new Date(Number(Member.joinedAt))
+                      -const options = {month: 'long', year: 'numeric',  day: 'numeric' };
+                      -dates = dates.toLocaleDateString(undefined, options)
+                    strong.chngeds.chngeds2.pull-right.pulldowns #{dates}
+        .col-md-12
+          .panel.white-bg
+            .panel-body
+              .row
+                .col-xs-12
+                  a(href='/myBooks')
+                    i.fa.fa-book.text-warning
+                    span.state-title.text-warning.chngeds
+                      b  Book collection
+                      strong.pull-right
+                        -let bookss= Member.books.length
+                        span.badge(style='color:white') #{bookss}
+    // footer section start
+    // main content end
+    // common scripts for all pages
+    script(src='/js/jquery-1.10.2.min.js')
+    script(src='/js/jquery-ui-1.9.2.custom.min.js')
+    script(src='/js/jquery-migrate-1.2.1.min.js')
+    script(src='/js/modernizr.min.js')
+    script(src='/js/jquery.nicescroll.js')
+    script(src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js', integrity='sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo', crossorigin='anonymous')
+    script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js', integrity='sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6', crossorigin='anonymous')
+    // common scripts for all pages
+    script(src='/js/scripts.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js')
+    script(src='https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/dataTables.responsive.min.js')
+    script(src='https://cdn.datatables.net/responsive/2.2.8/js/responsive.bootstrap4.min.js')
+    script(src='https://unpkg.com/axios/dist/axios.min.js')
+    script.
+      $(document).ready(function() {
+      $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+      $('.emailsetup').html($(".gitssss23").html());
+      var displayWindowSize10 = () => {
+      var mq13 = window.matchMedia("(min-width: 150px)");
+      var mq12 = window.matchMedia("(max-width: 378px)");
+      if (mq13.matches && mq12.matches) {
+      // alert('hi');
+      $('.oness').removeClass('col-xs-6');
+      $('.oness').addClass('col-sm-6');
+      } else {
+      $('.oness').removeClass('col-sm-6');
+      $('.oness').addClass('col-xs-6');
+      }
+      };
+      $('.opencatss').click(function() {
+      $('.cats').toggleClass('d-noness');
+      });
+      $('.dologout').on('click', async function(){
+      const getTodoItems = async() => {
+      try {
+      const response = await axios.post(`https://library-fyp.herokuapp.com/api/v1/members/logout`);      
+      }catch(errors) {
+      console.log(errors)
+      }
+      }
+      await getTodoItems()
+      window.setTimeout(() => {
+      location.assign(`/`);
+      }, 2500);
+      })
+      $(document).on('click', '.btnViess', function() {
+      $('#ViewBooks').modal('show')
+      });
+      $(document).on('click', '.btnDeltss', function() {
+      $('#DeleteBooks').modal('show')
+      });
+      var mq13 = window.matchMedia("(min-width: 150px)");
+      var mq12 = window.matchMedia("(max-width: 378px)");
+      if (mq13.matches && mq12.matches) {
+      // alert('hi');
+      $('.oness').removeClass('col-xs-6');
+      $('.oness').addClass('col-sm-6');
+      } else {
+      $('.oness').removeClass('col-sm-6');
+      $('.oness').addClass('col-xs-6');
+      }
+      window.addEventListener("resize", displayWindowSize10);
+      $("#booksListTab").DataTable();
+      });
+    // Modal autoload

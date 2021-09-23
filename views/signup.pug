@@ -1,0 +1,68 @@
+doctype html
+// Mirrored from zeroinfosys.com/library/Login/register/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jun 2021 04:27:17 GMT
+// Added by HTTrack
+meta(http-equiv='content-type', content='text/html;charset=UTF-8')
+// /Added by HTTrack
+head
+  meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0, maximum-scale=1.0')
+  meta(name='description', content='')
+  meta(name='author', content='zeroinfosys.com')
+  link(rel='shortcut icon', href='./assets/library/images/localhost_favicon.png', type='image/*')
+  title Registration | zeroinfosys.com
+  link(href='/css/style.css', rel='stylesheet')
+  link(href='/css/style-responsive.css', rel='stylesheet')
+body.login-body(style="background: #3b5998 url(/imagesuse/login-bg.jpg) no-repeat fixed; background-size: cover;")
+.container
+  form#form.form-signin.forms-signup
+    img.gitssss(src=`${AppSettings.logo}`, style="display:none")
+    .form-signin-heading.text-left
+      h1.sign-title Registration form
+      img(src='', class="setitsaa", alt='zeroinfosys.com', style='width: 50%')
+    .login-wrap
+      p Enter your personal details below
+      input.form-control.name(type='text', autocomplete='off', placeholder='Full Name', name='name')
+      input.form-control.profession(type='text', placeholder='Profession', name='profession')
+      input.form-control.contact(type='text', placeholder='Contact No', name='contact')
+      input.form-control.address(type='text', placeholder='Address', name='address')
+      .radios
+        label.label_radio.col-lg-6.col-sm-6(style='\
+        border-radius: 4px;\
+        padding: 5px;\
+        border: 2px solid #eaeaec;\
+        border-right: 0px;\
+        ')
+          input#radio-01(type='radio', checked='', value='male', name='gender')
+          |               Male
+        label.label_radio.col-lg-6.col-sm-6(style='\
+        border-radius: 4px;\
+        padding: 5px;\
+        border: 2px solid #eaeaec;\
+        ')
+          input#radio-02(type='radio', value='female', name='gender')
+          |               Female
+      br
+      br
+      input.form-control.email(type='text', placeholder='Email', name='email')
+      input.form-control.password(type='password', placeholder='Password', name='email')
+      // <input type="password" placeholder="Password" name="password" class="form-control" >
+      .registration
+        input(type='checkbox', checked='', value='agree this condition', required='')
+        |             I agree to the Terms of Service and Privacy Policy
+      button.btn.btn-lg.btn-login.btn-block(type='submit')
+        i.fa.fa-check
+      .registration
+        | Already Registered.
+        a(href='/Login')  Login 
+
+// Placed js at the end of the document so the pages load faster
+script(type="module", src="./js/index.js")
+script(src='/js/jquery-1.10.2.min.js')
+script(src='/js/bootstrap.min.js')
+script(src='/js/modernizr.min.js')
+script(src='https://unpkg.com/axios/dist/axios.min.js')
+script.
+  $(document).ready(function() {
+  $('.setitsaa').attr('src', $('.gitssss').attr('src'))
+  })
+// Mirrored from zeroinfosys.com/library/Login/register/ by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 17 Jun 2021 04:27:17 GMT
